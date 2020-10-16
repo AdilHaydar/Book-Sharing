@@ -1,0 +1,54 @@
+
+<div class="book_info">
+
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= @book.title %>
+  </p>
+
+  <p>
+    <strong>Author:</strong>
+    <%= @book.author %>
+  </p>
+
+  <p>
+    <strong>Page Count:</strong>
+    <%= @book.pagecount %>
+  </p>
+
+  <p>
+    <strong>User:</strong>
+    <%= @book.user.username %>
+  </p>
+
+  <p>
+    <strong>Tradable:</strong>
+    <% if @book.tradeable %>
+      <i class="fas fa-check-circle"></i>
+    <% else %>
+      <i class="fas fa-times-circle"></i>
+    <% end %>
+  </p>
+
+  <% if @book.user == current_user %>
+  <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-outline-primary'  %> |
+  <% end %>
+  <%= link_to 'Back', books_path, class: 'btn btn-outline-info' %>
+</div>
+
+<style>
+  .book_info{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(252,252,252,1) 1%, rgba(120,228,252,1) 100%);
+    border-color: lightgray;
+    border-style: outset;
+    border-width: 3px;
+    padding: 10px;
+    text-align: left;
+    box-shadow: 5px 10px gray;
+    border-radius: 10px;
+  }
+</style>
