@@ -27,14 +27,6 @@
   </div>
 
   <div class="field">
-    <!--<%= form.hidden_field :user_id, value: current_user.id %>-->
-    <!-- hidden_field'a gerek kalmadı çünkü bu işi books controller da def create'in hemen alt satırındaki kodu değiştirerek yaptım.
-    @book = current_user.books.build(book_params) yaptım.
-    @book = Book.new(book_params) idi.
-     -->
-  </div>
-
-  <div class="field">
     <%= form.label :tradeable %>
     <%= form.check_box :tradeable %>
   </div>

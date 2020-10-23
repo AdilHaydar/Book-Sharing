@@ -10,7 +10,6 @@ class ApplicationController < ActionController::Base
 		devise_parameter_sanitizer.permit(:account_update, keys: [:username])
 	end
 	
-	#login olduktan sonra bizi dashboard sayfasına yönlendiriyor bu fonksiyon.
 	private
   def after_sign_in_path_for(resource)
      "/dashboard"

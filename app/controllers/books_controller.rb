@@ -1,21 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
-  # GET /books
-  # GET /books.json
-  #def index
-    #if current_user
-      #@books = current_user.books
-    #else
-      #redirect_to :controller => 'welcome', :action => 'index'
-      #<%= link_to "Main Page", :controller => :welcome, :action => :index %>
-      #<%= link_to "Books", :controller => :books, :action => :index %>
-      #bu iki link_to application.html.erb içindeydi fakat edit user sayfasına gidince bu şekilde olunca hata veriyor ilginç şekilde.
-      #https://medium.com/@teamdartlondon/day-4-strong-parameters-for-devise-adding-a-username-field-to-sign-up-log-in-a3ba9634581c
-      #üstteki link ile devise a username field ekledim.
-    #end
-  #end
-
   # GET /books/1
   # GET /books/1.json
   def show
