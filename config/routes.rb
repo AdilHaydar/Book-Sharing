@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
+  get 'dashboard/index'
   #get 'welcome/index'
   resources :welcome
-  resources :books
+  resources :dashboard
+  resources :books do
+  	resources :comments
+  end
+
   devise_for :users
 
 	devise_scope :user do  
-	   get '/users/sign_out' => 'devise/sessions#destroy'     
+	   get '/users/sign_out' => 'devise/sessions#destroy'
 	end
+	resources :users, only: [:show]
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'welcome#index'
 end

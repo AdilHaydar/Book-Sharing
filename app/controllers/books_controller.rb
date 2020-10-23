@@ -3,18 +3,18 @@ class BooksController < ApplicationController
 
   # GET /books
   # GET /books.json
-  def index
-    if current_user
-      @books = current_user.books
-    else
-      redirect_to :controller => 'welcome', :action => 'index'
+  #def index
+    #if current_user
+      #@books = current_user.books
+    #else
+      #redirect_to :controller => 'welcome', :action => 'index'
       #<%= link_to "Main Page", :controller => :welcome, :action => :index %>
       #<%= link_to "Books", :controller => :books, :action => :index %>
       #bu iki link_to application.html.erb içindeydi fakat edit user sayfasına gidince bu şekilde olunca hata veriyor ilginç şekilde.
       #https://medium.com/@teamdartlondon/day-4-strong-parameters-for-devise-adding-a-username-field-to-sign-up-log-in-a3ba9634581c
       #üstteki link ile devise a username field ekledim.
-    end
-  end
+    #end
+  #end
 
   # GET /books/1
   # GET /books/1.json
@@ -36,7 +36,7 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    @book = Book.new(book_params)
+    @book = current_user.books.build(book_params)
 
     respond_to do |format|
       if @book.save
@@ -68,7 +68,7 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     respond_to do |format|
-      format.html { redirect_to books_url, notice: 'Book was successfully destroyed.' }
+      format.html { redirect_to :controller => 'dashboard', :action => 'index', notice: 'Book was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

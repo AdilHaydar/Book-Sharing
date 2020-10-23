@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_14_172436) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 2020_10_20_224034) do
 
   create_table "books", force: :cascade do |t|
     t.text "title"
@@ -21,6 +18,16 @@ ActiveRecord::Schema.define(version: 2020_10_14_172436) do
     t.integer "pagecount"
     t.integer "user_id"
     t.boolean "tradeable"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "body"
+    t.text "title"
+    t.integer "book_id"
+    t.boolean "approve"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

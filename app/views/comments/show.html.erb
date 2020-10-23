@@ -1,0 +1,31 @@
+<div class="book_info">
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <h4><%= @comment.book.title %> Book Comment</h4>
+  </p>
+
+  <br>
+
+  <p>
+    <strong>Title:</strong>
+    <%= @comment.title %>
+  </p>
+
+  <p>
+    <strong>Content:</strong>
+    <%= @comment.body %>
+  </p>
+
+  <p>
+    <strong>Commenter:</strong>
+    <%= link_to @comment.user.username, @comment.user %>
+  </p>
+
+  <p>
+    <%= link_to 'Approve It', @comment_path, method: :patch, class: 'btn btn-outline-primary' %>
+  </p>
+  <br>
+  
+

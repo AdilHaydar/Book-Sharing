@@ -21,26 +21,67 @@
 
   <p>
     <strong>User:</strong>
-    <%= @book.user.username %>
+    <%= link_to @book.user.username, @book.user %>
   </p>
 
   <p>
     <strong>Tradable:</strong>
     <% if @book.tradeable %>
-      <i class="fas fa-check-circle"></i>
+      Open to sharing
     <% else %>
-      <i class="fas fa-times-circle"></i>
+			Not shared
     <% end %>
   </p>
 
-  <% if @book.user == current_user %>
-  <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-outline-primary'  %> |
+  <% if current_user %>
+    <h4> Add a comment:</h2>
+    <%= form_with(model: [@book, @book.comments.build], local: true) do |form| %>
+
+      <p>
+        <%= form.label :title %><br>
+        <%= form.text_field :title, class: 'form-control', style: 'width: 50%' %>
+      </p>
+
+      <p>
+        <%= form.label :body %><br>
+        <%= form.text_area :body, class: 'form-control', style: 'width: 50%' %>
+      </p>
+
+      <p>
+        <%= form.submit %>
+      </p>
+
+    <% end %>
+
   <% end %>
-  <%= link_to 'Back', books_path, class: 'btn btn-outline-info' %>
+  <% if @book.user == current_user %>
+  <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-outline-primary' %>
+  <% end %>
+
+  <h4 style="margin-top: 5px;" align="center"> Comments </h4>
+
+  <% @book.comments.where(approve: true).each do |comment| %>
+    <div style="border:1px outset lightgray;border-radius: 5px; background: white; margin: 10px; padding: 10px">
+      <p>
+        Title : 
+        <%= comment.title %>
+      </p>
+      <p>
+        Content :
+        <%= comment.body %>
+      </p>
+      <p>
+        Commenter :
+        <%= comment.user.username %>
+      </p>
+    </div>
+  <% end %>
+  
 </div>
 
 <style>
-  .book_info{
+  .book_info
+  {
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(252,252,252,1) 1%, rgba(120,228,252,1) 100%);
     border-color: lightgray;
