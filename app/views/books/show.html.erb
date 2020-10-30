@@ -1,7 +1,6 @@
 
 <div class="book_info">
 
-
   <p id="notice"><%= notice %></p>
 
   <p>
@@ -27,15 +26,22 @@
   <p>
     <strong>Tradable:</strong>
     <% if @book.tradeable %>
-      Open to sharing
+      <%= link_to "Open to sharing", new_sharing_path(:id => @book.id) %>
     <% else %>
 			Not shared
     <% end %>
   </p>
 
+
+  <% if @book.user == current_user %>
+  <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-outline-primary', style: 'margin-bottom: 5px;' %>
+  <% end %>
   <% if current_user %>
+  
+    <div id="flash_notice"></div>
+
     <h4> Add a comment:</h2>
-    <%= form_with(model: [@book, @book.comments.build], local: true) do |form| %>
+    <%= form_with(model: [@book, @book.comments.build], local: false) do |form| %>
 
       <p>
         <%= form.label :title %><br>
@@ -48,38 +54,28 @@
       </p>
 
       <p>
-        <%= form.submit %>
+        <%= form.submit 'Create Comment', class: 'btn-sm btn-outline-primary' %>
       </p>
 
     <% end %>
 
   <% end %>
-  <% if @book.user == current_user %>
-  <%= link_to 'Edit', edit_book_path(@book), class: 'btn btn-outline-primary' %>
-  <% end %>
 
   <h4 style="margin-top: 5px;" align="center"> Comments </h4>
+  <div class="comments"></div>
+  <%= render @book.comments %>
 
-  <% @book.comments.where(approve: true).each do |comment| %>
-    <div style="border:1px outset lightgray;border-radius: 5px; background: white; margin: 10px; padding: 10px">
-      <p>
-        Title : 
-        <%= comment.title %>
-      </p>
-      <p>
-        Content :
-        <%= comment.body %>
-      </p>
-      <p>
-        Commenter :
-        <%= comment.user.username %>
-      </p>
-    </div>
-  <% end %>
-  
+
 </div>
 
 <style>
+  .comment{
+    border: 1px outset lightgray;
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
   .book_info
   {
     background: rgb(2,0,36);
@@ -91,5 +87,23 @@
     text-align: left;
     box-shadow: 5px 10px gray;
     border-radius: 10px;
+    padding-left: 15px;
+  }
+
+  #flash_notice
+  {
+    background: green;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px outset green;
+    border-radius: 10px;
+    width: 400px;
+    display: none;
+    padding: 5px;
+    text-align: center;
+  }
+  .approve_false{
+    opacity: 0.4;
   }
 </style>

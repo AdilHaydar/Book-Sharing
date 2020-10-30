@@ -1,0 +1,40 @@
+<% if comment.user %>
+	<% if (!comment.approve && comment.user == current_user) || comment.approve %>
+		
+			<div 
+			<% if !comment.approve && comment.user == current_user %>
+			class="comment approve_false" 
+			style="background: orange;"
+			<% else %>
+			class="comment"
+			<% end %> 
+			>
+
+				<% if !comment.approve && comment.user == current_user %>
+				<h5 style="color: red">Your comment has not been approved yet.</h5>
+				<% end %>
+				<p>
+				  <strong>Title:</strong>
+				  <%= comment.title %>
+				</p>
+
+				<p>
+				  <strong>Content:</strong>
+				  <%= comment.body %>
+				</p>
+
+				<p>
+				  <strong>Commenter:</strong>
+				  
+				<%= link_to comment.user.username, comment.user %>
+
+				</p>
+
+				<br>
+	</div>	
+	<% end %>
+<% end %>
+
+
+
+

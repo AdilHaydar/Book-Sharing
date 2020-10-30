@@ -4,4 +4,7 @@ class Book < ApplicationRecord
 
 	belongs_to :user
 	has_many :comments
+
+	has_many :sharings
+	#has_many :user, through: :sharings
 end

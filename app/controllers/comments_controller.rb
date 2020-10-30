@@ -9,8 +9,11 @@ class CommentsController < ApplicationController
 			@comment.user_id = current_user.id
 			@comment.approve = false
 			@comment.save
-			redirect_to book_path(@book)
-
+			
+			#redirect_to book_path(@book)
+			respond_to do |format|
+				format.js
+			end
 		end
 
 	end

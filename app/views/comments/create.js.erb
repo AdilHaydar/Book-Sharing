@@ -1,0 +1,8 @@
+$(".form-control").val('');
+
+$("#flash_notice").html("Your review is under review for approval");
+
+$("#flash_notice").show()
+
+$(".comments").append("<%= escape_javascript(render(@comment))%>");
+

@@ -10,6 +10,9 @@ class User < ApplicationRecord
 
   has_many :books
   has_many :comments
+  
+  has_many :sharings
+  #has_many :books, through: :sharings
   private
   def generate_username
   	self.username = self.email.split('@').first

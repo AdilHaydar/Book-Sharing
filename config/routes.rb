@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :books do
   	resources :comments
   end
+  resources :sharings
 
   devise_for :users
 
