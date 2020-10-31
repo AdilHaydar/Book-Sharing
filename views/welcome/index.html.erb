@@ -1,0 +1,57 @@
+<h1 align="center">Book Sharing Platfrom</h1>
+<br>
+
+
+<table class="table table-striped" style="text-align:center;">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+
+      <% if current_user %>
+      <th>Page Count</th>
+      <% end %>
+
+      <th>User</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <% if book.tradeable %>
+        <tr 
+        <% if current_user %>
+        id='<%= book.id %>' onclick="onClickFunction(this.id)
+        <% end %>
+        ">
+          <td><%= book.title %></td>
+          <td><%= book.author %></td>
+
+          <% if current_user %>
+          <td><%= book.pagecount %></td>
+          <% end %>
+          
+          <td><%= book.user.username %></td> 
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
+<script>
+  function onClickFunction(parametre){
+      window.location = 'books/'+parametre;
+    }
+    
+  </script>
+<style>
+  table tr td:nth-child(2){
+    color:blue;
+    text-decoration:underline;
+  }
+  table tr:hover{
+    background-color:lightblue !important;
+    cursor:pointer;
+  }
+</style>

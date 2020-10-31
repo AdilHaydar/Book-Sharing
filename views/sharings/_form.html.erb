@@ -1,0 +1,12 @@
+<%= form_with(model: @sharing, local: true) do |form| %>
+  <p>
+    <%= form.label 'Hangi kitabı öneriyorsunuz ?' %><br>
+    <%= form.select :offer_book_id, current_user.books.all.collect {|b| [b.title, b.id]} %>
+  </p>
+   <%= form.hidden_field :book_id, value: @book.id %>
+  <p>
+    <%= form.submit 'Gonder', class: "btn btn-outline-primary" %>
+  </p>
+
+
+<% end %>

@@ -1,0 +1,145 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Dashboard</h1>
+
+<table class="table table-striped" style="text-align:center;">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Page Count</th>
+      <th>Tradable</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.pagecount %></td>
+        <td>
+          <% if book.tradeable %>
+            Open to sharing
+          <% else %>
+            Not shared
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', book %></td>
+        <td><%= link_to 'Edit', edit_book_path(book) %></td>
+        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Book', new_book_path, class: 'btn btn-outline-primary' %>
+
+<hr>
+<h5>Onay Bekleyen Yorumlar</h5>
+<hr>
+<div style="width: 100%; height: 250px; overflow-y: scroll; margin-bottom: 50px;">
+<% @books.each do |book| %>
+	<% book.comments.each do |comment| %>
+		<% if !comment.approve %>
+
+		 	<p style="font-size:14px;">
+        <strong><%= comment.user.username %></strong> wrote a comment your <strong><%= book.title %></strong> book. <%= link_to 'Click Here', book_comment_url(book,comment) %> to accept it.
+      </p>
+    
+		<% end %>
+	<% end %>
+<% end %>
+</div>
+
+<hr>
+<h5>Yorumlarınız</h5>
+<hr>
+<div style="width: 100%; height: 250px; overflow-y: scroll; margin-bottom: 50px;">
+<% current_user.comments.each do |comment| %>
+  <% if comment.approve %>
+    <p style="font-size:14px;"><%= comment.book.title %> Kitabına yaptığınız yorum onaylanmıştır. <%= link_to 'Görüntülemek İçin Tıklayın', comment.book %></p>
+  <% else %>
+    <p style="font-size:14px;"><%= comment.book.title %> Kitabıa yaptığınız yorum henüz onaylanmadı.</p>
+  <% end %>
+<% end %>
+</div>
+
+<hr>
+<h5> Kitap İstekleriniz </h5>
+<hr>
+<div style="width: 100%; height: 250px; overflow-y: scroll; margin-bottom: 50px;">
+  <% current_user.sharings.each do |s| %>
+    <% if s.status == nil %>
+      <p style="font-size:14px;"><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Waiting</p>
+    <% elsif s.status == false %>
+      <p style="font-size:14px;"><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Deny</p>
+    <% else %>
+      <p style="font-size:14px;"><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Approved</p>
+    <% end %> 
+  <% end %>
+</div>
+
+<hr>
+<h5> Onay Bekleyen Kitaplar </h5>
+<hr>
+<div style="width: 100%; height: 250px; overflow-y: scroll; margin-bottom: 50px;">
+
+  <% current_user.books.each do |book| %>
+    <% book.sharings.each do |request| %>
+      <% if request.status == nil %>
+        <p style="font-size:14px;"><strong><%= book.title %></strong> Kitabına <strong><%= request.user.username %></strong> istek gönderdi. <%= link_to 'Yönet', edit_sharing_url(:id => request.id), class: 'btn-sm btn-primary' %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</div>
+
+<style>
+  table tr td:nth-child(2){
+    color:blue;
+    text-decoration:underline;
+  }
+  table tr:hover{
+    background-color:lightblue !important;
+    cursor:pointer;
+  }
+
+  #navbar {
+  background-color: #333; /* Black background color */
+  position: fixed; /* Make it stick/fixed */
+  top: -50px; /* Hide the navbar 50 px outside of the top view */
+  width: 100%; /* Full width */
+  transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}
+
+/* Style the navbar links */
+#navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  text-decoration: none;
+}
+
+#navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+</style>
+
+<script> 
+  window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("navbar").style.top = "0";
+  } else {
+    document.getElementById("navbar").style.top = "-50px";
+  }
+}
+</script>
