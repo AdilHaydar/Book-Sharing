@@ -3,10 +3,15 @@ Rails.application.routes.draw do
   #get 'welcome/index'
   resources :welcome
   resources :dashboard
+
   resources :books do
   	resources :comments
   end
+
   resources :sharings
+
+  post '/approve', to: 'sharings#approve', as: 'approve'
+  post '/deny', to: 'sharings#deny', as: 'deny'
 
   devise_for :users
 

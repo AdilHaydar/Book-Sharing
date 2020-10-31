@@ -39,20 +39,34 @@
 <%= link_to 'New Book', new_book_path, class: 'btn btn-outline-primary' %>
 
 <hr>
-
+<h5>Onay Bekleyen Yorumlar</h5>
+<hr>
+<div style="width: 100%; height: 250px; overflow-y: scroll; margin-bottom: 50px;">
 <% @books.each do |book| %>
 	<% book.comments.each do |comment| %>
 		<% if !comment.approve %>
 
-		 	<p style="font-size:16px;">
+		 	<p style="font-size:14px;">
         <strong><%= comment.user.username %></strong> wrote a comment your <strong><%= book.title %></strong> book. <%= link_to 'Click Here', book_comment_url(book,comment) %> to accept it.
       </p>
     
 		<% end %>
 	<% end %>
 <% end %>
+</div>
 
-
+<hr>
+<h5>Yorumlarınız</h5>
+<hr>
+<div style="width: 100%; height: 250px; overflow-y: scroll; margin-bottom: 50px;">
+<% current_user.comments.each do |comment| %>
+  <% if comment.approve %>
+    <p style="font-size:14px;"><%= comment.book.title %> Kitabına yaptığınız yorum onaylanmıştır. <%= link_to 'Görüntülemek İçin Tıklayın', comment.book %></p>
+  <% else %>
+    <p style="font-size:14px;"><%= comment.book.title %> Kitabıa yaptığınız yorum henüz onaylanmadı.</p>
+  <% end %>
+<% end %>
+</div>
 
 <hr>
 <h5> Kitap İstekleriniz </h5>
@@ -60,11 +74,11 @@
 <div style="width: 100%; height: 250px; overflow-y: scroll; margin-bottom: 50px;">
   <% current_user.sharings.each do |s| %>
     <% if s.status == nil %>
-      <p><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Waiting</p>
+      <p style="font-size:14px;"><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Waiting</p>
     <% elsif s.status == false %>
-      <p><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Deny</p>
+      <p style="font-size:14px;"><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Deny</p>
     <% else %>
-      <p><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Approved</p>
+      <p style="font-size:14px;"><strong><%= s.book.title %></strong>, <strong><%= s.book.user.username %></strong> => Approved</p>
     <% end %> 
   <% end %>
 </div>
@@ -77,7 +91,7 @@
   <% current_user.books.each do |book| %>
     <% book.sharings.each do |request| %>
       <% if request.status == nil %>
-        <p><strong><%= book.title %></strong> Kitabına <strong><%= request.user.username %></strong> istek gönderdi. <%= link_to 'Yönet', edit_sharing_url(:id => book.id), class: 'btn-sm btn-primary' %></p>
+        <p style="font-size:14px;"><strong><%= book.title %></strong> Kitabına <strong><%= request.user.username %></strong> istek gönderdi. <%= link_to 'Yönet', edit_sharing_url(:id => request.id), class: 'btn-sm btn-primary' %></p>
       <% end %>
     <% end %>
   <% end %>

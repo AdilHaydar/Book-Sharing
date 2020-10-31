@@ -20,9 +20,23 @@ class SharingsController < ApplicationController
 	end
 
 	def edit
-		@sharing = Sharing.find(4)
+		@sharing = Sharing.find(params[:id])
 		@book = @sharing.book
-		puts @book.user
+	end
+	def deny
+		sharing = Sharing.find(params[:id])
+		sharing.status = false
+		sharing.save
+		redirect_to '/dashboard'
+	end
+	def approve
+		sharing = Sharing.find(params[:id])
+		sharing.status = true
+		sharing.save
+		redirect_to '/dashboard'
+	end
+	def update
+		puts "UPDATE"
 	end
 
 	private
